@@ -23,7 +23,13 @@
             aria-selected="true"
             @click="getAllMatches(elem.id)"
           >
-            <img class="mr-2" src="../assets/images/aseria.svg" alt="" />
+            <div class="img-wrap">
+              <img
+                class="mr-2"
+                :src="`https://pentaproject-production.up.railway.app${elem.icon}`"
+                alt=""
+              />
+            </div>
             {{ elem.name }}
           </button>
         </li>
@@ -100,6 +106,14 @@ onMounted(() => {
     line-height: 22px;
     padding: 10px;
     outline: none;
+    .img-wrap {
+      max-width: 90px;
+      height: 30px;
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
   }
   .active {
     background: #469264 !important;

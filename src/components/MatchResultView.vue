@@ -2,17 +2,15 @@
   <div class="mb-3">
     <div class="match-result d-flex align-items-center gap-2">
       <div class="wrap-match d-flex align-items-center gap-2">
-        <img src="../assets/images/barsa.svg" alt="" />
         <p class="m-0">{{ props.match.name1 }}</p>
       </div>
       <div class="d-flex align-items-center gap-2">
         <p class="m-0">{{ props.match.score1 }}</p>
         <p class="m-0">:</p>
-        <p class="m-0 fw-bolder">{{ props.match.score2 }}</p>
+        <p class="m-0">{{ props.match.score2 }}</p>
       </div>
       <div class="wrap-match d-flex align-items-center gap-2">
-        <p class="m-0 fw-bolder">{{ props.match.name2 }}</p>
-        <img src="../assets/images/livurpool.svg" alt="" />
+        <p class="m-0">{{ props.match.name2 }}</p>
       </div>
     </div>
     <div class="time-wrap d-flex align-items-center gap-2">
@@ -38,6 +36,7 @@ const props = defineProps({
   width: 100%;
   padding: 10px 20px !important;
   border-radius: 10px 10px 10px 0px;
+  max-width: 360px;
 }
 .time-wrap {
   width: 150px;

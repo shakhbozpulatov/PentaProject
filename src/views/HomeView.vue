@@ -16,19 +16,23 @@
           </div>
         </div>
         <div class="row">
-          <div v-for="elem in 6" :key="elem" class="col-md-4">
-            <div class="advertise-wrap adv-little mt-3">
-              <div class="img-wrap little-img">
-                <img src="../assets/images/adv2.png" alt="" />
+          <div v-for="elem in news" :key="elem" class="col-md-4">
+            <router-link :to="`/news/${elem.id}`">
+              <div class="advertise-wrap adv-little mt-3">
+                <div class="img-wrap little-img">
+                  <img
+                    :src="`https://pentaproject-production.up.railway.app${elem.image}`"
+                    alt=""
+                  />
+                </div>
+                <div class="adv-content little-content">
+                  <p class="adv-title little-title m-0">
+                    {{ elem.title }}
+                  </p>
+                  <p class="m-0 adv-time little-time">2 soat oldin</p>
+                </div>
               </div>
-              <div class="adv-content little-content">
-                <p class="adv-title little-title m-0">
-                  Messi Goal.com saytida yilning eng yaxshi futbolchisi deb
-                  topildi
-                </p>
-                <p class="m-0 adv-time little-time">2 soat oldin</p>
-              </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -41,19 +45,17 @@
     </div>
     <div class="last-news mt-3">
       <div class="row">
-        <div v-for="elem in 8" :key="elem" class="col-md-3">
-          <router-link to="/news/2">
+        <div v-for="elem in news" :key="elem" class="col-md-3">
+          <router-link :to="`/news/${elem.id}`">
             <div class="news-wrapper">
               <div class="img-wrapper">
-                <img src="../assets/images/adv2.png" alt="" />
+                <img
+                  :src="`https://pentaproject-production.up.railway.app${elem.image}`"
+                  alt=""
+                />
               </div>
               <p class="news-title">
-                Zidan "Manchester Yunayted"ga Premer-ligaga tayyor emasligini
-                aytdi
-              </p>
-              <p class="news-content">
-                Zidan "Manchester Yunayted" ga Premer-ligaga tayyor emasligini
-                aytdi
+                {{ elem.title }}
               </p>
             </div>
           </router-link>
@@ -69,13 +71,13 @@ import ScheduleView from "../components/ScheduleView.vue";
 import TabResultsView from "../components/TabResultsView.vue";
 import axios from "axios";
 
-const image = ref("");
+const news = ref([]);
 onMounted(() => {
   axios
     .get(`https://pentaproject-production.up.railway.app/api/v1/get_news_all`)
     .then((res) => {
       console.log("news", res.data);
-      image.value = res.data;
+      news.value = res.data;
     })
     .catch((err) => {
       console.log(err);
@@ -156,13 +158,17 @@ a {
 }
 .last-news {
   .news-wrapper {
+    height: 360px;
     padding: 10px;
     background: #f4f5f7;
     border-radius: 10px;
     margin-bottom: 20px;
     transition: all 0.3s;
+    overflow: hidden;
     img {
       width: 100%;
+      height: 240px;
+      object-fit: cover;
     }
     .news-title {
       font-weight: 700;
@@ -170,12 +176,6 @@ a {
       line-height: 20px;
       color: #000000;
       margin: 10px 0;
-    }
-    .news-content {
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 19px;
-      color: #4a4b4c;
     }
   }
   .news-wrapper:hover {

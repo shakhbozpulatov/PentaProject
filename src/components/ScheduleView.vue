@@ -6,6 +6,7 @@
       class="select m-2"
       placeholder="Liga..."
       size="large"
+      @change="getTeams(id)"
     >
       <el-option
         v-for="item in leagues"
@@ -46,6 +47,18 @@ import axios from "axios";
 const team = ref("");
 const teams = ref([]);
 const leagues = ref([]);
+let indexLeague = ref(2);
+const getTeams = function () {
+  axios
+    .get(`/sort_teams/${team.value}`)
+    .then((res) => {
+      console.log(res.data);
+      teams.value = res.data
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 onMounted(() => {
   axios
     .get(`/get_all_league`)
@@ -57,7 +70,7 @@ onMounted(() => {
       console.log(err);
     });
   axios
-    .get(`/sort_teams/1`)
+    .get(`/sort_teams/${indexLeague.value}`)
     .then((res) => {
       console.log("asd", res.data);
       teams.value = res.data;

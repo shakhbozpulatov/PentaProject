@@ -6,140 +6,38 @@
         id="pills-tab"
         role="tablist"
       >
-        <li class="nav-item" role="presentation">
+        <li
+          v-for="(elem, index) in leagues"
+          :key="index"
+          class="nav-item"
+          role="presentation"
+        >
           <button
-            class="nav-link active d-flex align-items-center gap-2"
-            id="pills-aseria-tab"
+            class="nav-link d-flex align-items-center gap-2"
+            :id="`pills-${elem.id}-tab`"
             data-bs-toggle="pill"
-            data-bs-target="#pills-aseria"
+            :data-bs-target="`#pills-${elem.id}`"
             type="button"
             role="tab"
-            aria-controls="pills-aseria"
+            :aria-controls="`pills-${elem.id}`"
             aria-selected="true"
+            @click="getAllMatches(elem.id)"
           >
             <img class="mr-2" src="../assets/images/aseria.svg" alt="" />
-            Italiya. Seriya A
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link d-flex align-items-center gap-2"
-            id="pills-premier-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-premier"
-            type="button"
-            role="tab"
-            aria-controls="pills-premier"
-            aria-selected="false"
-          >
-            <img class="mr-2" src="../assets/images/premier.svg" alt="" />
-            Premier Liga
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link d-flex align-items-center gap-2"
-            id="pills-laliga-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-laliga"
-            type="button"
-            role="tab"
-            aria-controls="pills-laliga"
-            aria-selected="false"
-          >
-            <img src="../assets/images/laliga.svg" alt="" />
-            LaLiga
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link d-flex align-items-center gap-2"
-            id="pills-bundesliga-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-bundesliga"
-            type="button"
-            role="tab"
-            aria-controls="pills-bundesliga"
-            aria-selected="true"
-          >
-            <img class="mr-2" src="../assets/images/bundesliga.svg" alt="" />
-            Bundesliga
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link d-flex align-items-center gap-2"
-            id="pills-liga1-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-liga1"
-            type="button"
-            role="tab"
-            aria-controls="pills-liga1"
-            aria-selected="true"
-          >
-            <img class="mr-2" src="../assets/images/aseria.svg" alt="" />
-            Ligue 1
+            {{ elem.name }}
           </button>
         </li>
       </ul>
       <div class="tab-content" id="pills-tabContent">
         <div
           class="tab-pane fade show active"
-          id="pills-aseria"
+          :id="`pills-${leagueId}`"
           role="tabpanel"
-          aria-labelledby="pills-aseria-tab"
+          :aria-labelledby="`pills-${leagueId}-tab`"
         >
           <div class="row">
-            <div v-for="elem in 4" :key="elem" class="col-md-3">
-              <MatchResultView />
-            </div>
-          </div>
-        </div>
-        <div
-          class="tab-pane fade"
-          id="pills-premier"
-          role="tabpanel"
-          aria-labelledby="pills-premier-tab"
-        >
-          <div class="row">
-            <div v-for="elem in 8" :key="elem" class="col-md-3">
-              <MatchResultView />
-            </div>
-          </div>
-        </div>
-        <div
-          class="tab-pane fade"
-          id="pills-laliga"
-          role="tabpanel"
-          aria-labelledby="pills-laliga-tab"
-        >
-          <div class="row">
-            <div v-for="elem in 4" :key="elem" class="col-md-3">
-              <MatchResultView />
-            </div>
-          </div>
-        </div>
-        <div
-          class="tab-pane fade show"
-          id="pills-bundesliga"
-          role="tabpanel"
-          aria-labelledby="pills-bundesliga-tab"
-        >
-          <div class="row">
-            <div v-for="elem in 8" :key="elem" class="col-md-3">
-              <MatchResultView />
-            </div>
-          </div>
-        </div>
-        <div
-          class="tab-pane fade show"
-          id="pills-liga1"
-          role="tabpanel"
-          aria-labelledby="pills-liga1-tab"
-        >
-          <div class="row">
-            <div v-for="elem in 4" :key="elem" class="col-md-3">
-              <MatchResultView />
+            <div v-for="elem in matches" :key="elem" class="col-md-3">
+              <MatchResultView :match="elem" />
             </div>
           </div>
         </div>
@@ -149,7 +47,44 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from "vue";
 import MatchResultView from "./MatchResultView.vue";
+import axios from "axios";
+
+const matches = ref([]);
+const leagues = ref([]);
+const leagueId = ref(0);
+const getAllMatches = function (index) {
+  axios
+    .get(`get_matches_by_league/${index}`)
+    .then((res) => {
+      console.log(res.data);
+      matches.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+axios
+  .get(`/get_all_league`)
+  .then((res) => {
+    console.log("leagues", res.data);
+    leagues.value = res.data;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+onMounted(() => {
+  axios
+    .get(`/get_matches_by_league/1`)
+    .then((res) => {
+      console.log("matches", res.data);
+      matches.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 </script>
 
 <style lang="scss" scoped>

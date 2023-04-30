@@ -3,23 +3,34 @@
     <div class="match-result d-flex align-items-center gap-2">
       <div class="wrap-match d-flex align-items-center gap-2">
         <img src="../assets/images/barsa.svg" alt="" />
-        <p class="m-0 ">Barcelona</p>
+        <p class="m-0">{{ props.match.name1 }}</p>
       </div>
       <div class="d-flex align-items-center gap-2">
-        <p class="m-0 ">3</p>
+        <p class="m-0">{{ props.match.score1 }}</p>
         <p class="m-0">:</p>
-        <p class="m-0 fw-bolder">4</p>
+        <p class="m-0 fw-bolder">{{ props.match.score2 }}</p>
       </div>
       <div class="wrap-match d-flex align-items-center gap-2">
-        <p class="m-0 fw-bolder">Liverpool</p>
+        <p class="m-0 fw-bolder">{{ props.match.name2 }}</p>
         <img src="../assets/images/livurpool.svg" alt="" />
       </div>
     </div>
-    <div class="time-wrap d-flex align-items-center gap-2">11.11.2021 <p class="m-0 fw-bolder">23:59</p></div>
+    <div class="time-wrap d-flex align-items-center gap-2">
+      {{ props.match.date }}
+      <p class="m-0 fw-bolder">23:59</p>
+    </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps({
+  match: {
+    type: Object,
+  },
+});
+</script>
 
 <style lang="scss" scoped>
 .match-result {
@@ -29,7 +40,7 @@
   border-radius: 10px 10px 10px 0px;
 }
 .time-wrap {
-  width: 116px;
+  width: 150px;
   background: #ffffff;
   border: 1px solid #f4f5f7;
   padding: 4px 12px;

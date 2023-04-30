@@ -74,7 +74,7 @@ onMounted(() => {
   axios
     .get(`https://pentaproject-production.up.railway.app/api/v1/get_news_all`)
     .then((res) => {
-      console.log(res.data);
+      console.log("news", res.data);
       image.value = res.data;
     })
     .catch((err) => {
@@ -85,7 +85,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 .advertise-wrap {
   position: relative;
@@ -160,6 +160,7 @@ a {
     background: #f4f5f7;
     border-radius: 10px;
     margin-bottom: 20px;
+    transition: all 0.3s;
     img {
       width: 100%;
     }
@@ -176,6 +177,9 @@ a {
       line-height: 19px;
       color: #4a4b4c;
     }
+  }
+  .news-wrapper:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
 }
 </style>

@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="tabs-wrap my-3">
-      <ul class="nav nav-pills mb-3 d-flex align-items-center gap-3" id="pills-tab" role="tablist">
+      <ul
+        class="nav nav-pills mb-3 d-flex align-items-center gap-3"
+        id="pills-tab"
+        role="tablist"
+      >
         <li class="nav-item" role="presentation">
           <button
             class="nav-link active d-flex align-items-center gap-2"
@@ -85,7 +89,11 @@
           role="tabpanel"
           aria-labelledby="pills-aseria-tab"
         >
-          <MatchResultView />
+          <div class="row">
+            <div v-for="elem in 4" :key="elem" class="col-md-3">
+              <MatchResultView />
+            </div>
+          </div>
         </div>
         <div
           class="tab-pane fade"
@@ -93,7 +101,11 @@
           role="tabpanel"
           aria-labelledby="pills-premier-tab"
         >
-          2
+          <div class="row">
+            <div v-for="elem in 8" :key="elem" class="col-md-3">
+              <MatchResultView />
+            </div>
+          </div>
         </div>
         <div
           class="tab-pane fade"
@@ -101,7 +113,11 @@
           role="tabpanel"
           aria-labelledby="pills-laliga-tab"
         >
-          3
+          <div class="row">
+            <div v-for="elem in 4" :key="elem" class="col-md-3">
+              <MatchResultView />
+            </div>
+          </div>
         </div>
         <div
           class="tab-pane fade show"
@@ -109,7 +125,11 @@
           role="tabpanel"
           aria-labelledby="pills-bundesliga-tab"
         >
-          4
+          <div class="row">
+            <div v-for="elem in 8" :key="elem" class="col-md-3">
+              <MatchResultView />
+            </div>
+          </div>
         </div>
         <div
           class="tab-pane fade show"
@@ -117,7 +137,11 @@
           role="tabpanel"
           aria-labelledby="pills-liga1-tab"
         >
-          5
+          <div class="row">
+            <div v-for="elem in 4" :key="elem" class="col-md-3">
+              <MatchResultView />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -125,8 +149,7 @@
 </template>
 
 <script setup>
-import MatchResultView from './MatchResultView.vue';
-
+import MatchResultView from "./MatchResultView.vue";
 </script>
 
 <style lang="scss" scoped>

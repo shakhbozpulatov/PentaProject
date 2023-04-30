@@ -7,6 +7,11 @@ const routes = [
     name: "home",
     component: HomeView,
   },
+  {
+    path: "/news/:id",
+    name: "News",
+    component: () => import("@/views/NewsView.vue")
+  }
 ];
 
 const router = createRouter({

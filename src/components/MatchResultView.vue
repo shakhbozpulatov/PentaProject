@@ -1,6 +1,8 @@
 <template>
   <div class="mb-3">
-    <div class="match-result d-flex align-items-center gap-2">
+    <div
+      class="match-result d-flex align-items-center justify-content-center gap-2"
+    >
       <div class="wrap-match d-flex align-items-center gap-2">
         <p class="m-0">{{ props.match.name1 }}</p>
       </div>
@@ -34,9 +36,15 @@ const props = defineProps({
 .match-result {
   background: #f4f5f7;
   width: 100%;
-  padding: 10px 20px !important;
+  padding: 10px 20px;
   border-radius: 10px 10px 10px 0px;
-  max-width: 360px;
+  max-width: 400px;
+  .wrap-match {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #000000;
+  }
 }
 .time-wrap {
   width: 150px;

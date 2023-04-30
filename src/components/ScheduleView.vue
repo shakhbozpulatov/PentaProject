@@ -110,13 +110,17 @@ onMounted(() => {
   .title {
     padding: 10px 12px;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 22px;
     line-height: 33px;
     color: #000000;
   }
   .table {
     width: 100%;
     border-collapse: collapse;
+    padding: 0 10px;
+    th {
+      font-size: 13px;
+    }
 
     .td-row:nth-child(odd) {
       background: #ffffff;
@@ -125,7 +129,7 @@ onMounted(() => {
     }
     .td-row {
       .team-name {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
       }
     }

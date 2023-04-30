@@ -16,8 +16,8 @@
           </div>
         </div>
         <div class="row">
-          <div v-for="elem in news" :key="elem" class="col-md-4">
-            <router-link :to="`/news/${elem.id}`">
+          <div v-for="(elem, index) in news" :key="index" class="col-md-4">
+            <router-link v-if="index < 3" :to="`/news/${elem.id}`">
               <div class="advertise-wrap adv-little mt-3">
                 <div class="img-wrap little-img">
                   <img
@@ -29,7 +29,7 @@
                   <p class="adv-title little-title m-0">
                     {{ elem.title }}
                   </p>
-                  <p class="m-0 adv-time little-time">2 soat oldin</p>
+                  <p class="m-0 adv-time little-time">{{ elem.date }}</p>
                 </div>
               </div>
             </router-link>
@@ -45,7 +45,7 @@
     </div>
     <div class="last-news mt-3">
       <div class="row">
-        <div v-for="elem in news" :key="elem" class="col-md-3">
+        <div v-for="elem in newNews" :key="elem" class="col-md-3">
           <router-link :to="`/news/${elem.id}`">
             <div class="news-wrapper">
               <div class="img-wrapper">
@@ -62,6 +62,11 @@
         </div>
       </div>
     </div>
+    <div class="mb-5">
+      <button v-if="!isAllNews" @click="allNewsBtn" class="see-all-news">
+        Barchasini ko'rish
+      </button>
+    </div>
   </div>
 </template>
 
@@ -72,12 +77,19 @@ import TabResultsView from "../components/TabResultsView.vue";
 import axios from "axios";
 
 const news = ref([]);
+const newNews = ref([]);
+let isAllNews = ref(false);
+const allNewsBtn = function () {
+  isAllNews.value = true;
+  newNews.value = news.value;
+};
 onMounted(() => {
   axios
     .get(`https://pentaproject-production.up.railway.app/api/v1/get_news_all`)
     .then((res) => {
       console.log("news", res.data);
       news.value = res.data;
+      newNews.value = news.value.slice(0, 4);
     })
     .catch((err) => {
       console.log(err);
@@ -158,17 +170,21 @@ a {
 }
 .last-news {
   .news-wrapper {
-    height: 360px;
+    height: 380px;
     padding: 10px;
     background: #f4f5f7;
     border-radius: 10px;
     margin-bottom: 20px;
     transition: all 0.3s;
     overflow: hidden;
-    img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
+    .img-wrapper {
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        transition: all 0.3s;
+      }
     }
     .news-title {
       font-weight: 700;
@@ -180,6 +196,21 @@ a {
   }
   .news-wrapper:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    img {
+      transform: scale(1.1);
+    }
   }
+}
+.see-all-news {
+  background: #eaeaea;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33px;
+  color: #000000;
+  outline: none;
+  border: 1px solid #eaeaea;
+  padding: 10px;
+  width: 100%;
 }
 </style>
